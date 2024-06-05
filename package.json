@@ -1,0 +1,52 @@
+{
+  "name": "aleho-dev-backend",
+  "version": "0.0.1",
+  "description": "",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon --no-warnings .",
+    "start": "node --no-warnings .",
+    "test": "node ./node_modules/mocha/bin/mocha.js ./test/test.js"
+  },
+  "author": {
+    "name": "Alejandro Abraham",
+    "email": "alejandro.r.abraham@gmail.com",
+    "url": "https://github.com/Aleho84"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Aleho84/aleho-dev-backend.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Aleho84/aleho-bot/issues"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "chai": "^5.1.1",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.9",
+    "express": "^4.20.0",
+    "jsonwebtoken": "^9.0.2",
+    "mocha": "^10.4.0",
+    "mongoose": "^8.4.0",
+    "passport": "^0.7.0",
+    "passport-jwt": "^4.0.1",
+    "passport-local": "^1.0.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.0",
+    "winston": "^3.14.2",
+    "winston-mongodb": "^5.1.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "node_modules"
+    ]
+  }
+}

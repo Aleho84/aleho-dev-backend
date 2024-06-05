@@ -1,0 +1,12 @@
+# Dependency directories
+node_modules/
+
+# Logs
+*.log
+
+# dotenv environment variables file
+.env
+
+# Certificates
+*.pem
+*.csr
