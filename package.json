@@ -1,0 +1,68 @@
+{
+  "name": "aleho-dev-backend",
+  "version": "0.0.1",
+  "description": "",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon --no-warnings .",
+    "start": "node .",
+    "update": "ncu -u && pnpm install",
+    "test": "node ./node_modules/mocha/bin/mocha.js ./test/test.js --timeout 10000",
+    "build-doker": "docker image build --pull --file ./Dockerfile --tag aleho-dev-backend:latest --label aleho-dev ."
+  },
+  "author": {
+    "name": "Alejandro Abraham",
+    "email": "alejandro.r.abraham@gmail.com",
+    "url": "https://github.com/Aleho84"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Aleho84/aleho-dev-backend.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Aleho84/aleho-bot/issues"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "@google/generative-ai": "^0.21.0",
+    "axios": "^1.8.2",
+    "bcrypt": "^5.1.1",
+    "chai": "^5.2.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "joi": "^17.13.3",
+    "jsonwebtoken": "^9.0.2",
+    "mocha": "^11.1.0",
+    "mongoose": "^8.12.1",
+    "nodemailer": "^6.10.0",
+    "passport": "^0.7.0",
+    "passport-jwt": "^4.0.1",
+    "passport-local": "^1.0.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
+    "winston": "^3.17.0",
+    "winston-mongodb": "^6.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "node_modules",
+      "./test/*"
+    ]
+  },
+  "pnpm": {
+    "ignoredBuiltDependencies": [
+      "@scarf/scarf",
+      "bcrypt"
+    ],
+    "onlyBuiltDependencies": [
+      "bcrypt"
+    ]
+  }
+}
