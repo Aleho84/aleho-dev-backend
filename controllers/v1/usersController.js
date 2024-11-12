@@ -39,7 +39,17 @@ export const usersSignin = async (req, res, next) => {
 
     // Generar y enviar el token JWT si el alta es correcta
     const token = jwt.sign({ id: newUser._id }, jwtSecret, { expiresIn: jwtExpire });
-    res.status(201).json({ token });
+    res.status(201).json({
+      token,
+      user: {
+        id: newUser._id,
+        name: newUser.name,
+        email: newUser.email,
+        image: newUser.image,
+        confirmed: newUser.account.confirmed,
+        admin: newUser.account.admin,
+      }
+    });
   } catch (error) {
     next(error);
   }
@@ -91,7 +101,7 @@ export const usersDelete = async (req, res, next) => {
     // Comprueba los parametros 
     if (!id) throw new ValidationError("Parametro faltante: 'id'");
 
-    // Busca y elimina el
+    // Busca y elimina el usuario
     const deleteUser = await usersDao.delete(id);
     if (!deleteUser) throw new ValidationError(`Usuario con id:'${id}' no encontrado`);
     
