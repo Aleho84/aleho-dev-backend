@@ -1,18 +1,41 @@
-import { assert } from 'chai';
-import readJson  from '../src/readJson.js';
+import dotenv from "dotenv";
+dotenv.config();
 
-describe('Test Functions', () => {
-    describe('Test readJson:', () => {
-        it('should return an object', () => {
-            const test = readJson('./package.json');
-        });
+import { assert } from "chai";
+import readJson from "../src/readJson.js";
+import axios from "axios";
 
-        it('verify properties of the object', () => {
-            const test = readJson('./package.json');
-            assert.property(test, 'name'); // Verify 'name' property exists
-            assert.property(test, 'version'); // Verify 'version' property exists
-            assert.property(test, 'description'); // Verify 'description' property exists
-            assert.property(test, 'author'); // Verify 'author' property exists
-        });                   
+const urlEndpoint = process.env.PROTOCOL + "://" + process.env.HOST + ":" + process.env.PORT;
+const version = "v1";
+
+describe('Test endpoint', () => {
+    it('Create new user', async () => {
+        try {
+            const newUser = {
+                "name": "test",
+                "email": "test@mail.com",
+                "password": "Asdf1234",
+                "image": `${urlEndpoint}/img/user.png`
+            };
+            const response = await axios.post(`${urlEndpoint}/api/v1/users/signin`, newUser); // 
+            assert.equal(response.status, 201);
+        } catch (error) {
+            assert.fail(error.message);
+        }
     });
-});    
+
+
+    it('Login new user', async () => {
+        try {
+            const loginUser = {
+                "email": "test@mail.com",
+                "password": "Asdf1234"
+            };
+            const response = await axios.post(`${urlEndpoint}/api/v1/users/login`, loginUser); // 
+            assert.equal(response.status, 200);
+            assert.property(response.data, 'token')
+        } catch (error) {
+            assert.fail(error.message);
+        }
+    });
+});

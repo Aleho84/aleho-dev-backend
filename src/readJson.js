@@ -1,5 +1,6 @@
 import { readFileSync } from 'fs';
 
+// Funcion para leer archivos JSON
 const readJson = function(file) {
     try {
         file ? file : file = './package.json';

@@ -6,6 +6,7 @@ import mongoose from "mongoose";
 
 const mongoURI = process.env.MONGOOSE_URI;
 
+// Inizializa la base de datos Mongo
 export default async () => {
   try {
     mongoose.set("strictQuery", false);

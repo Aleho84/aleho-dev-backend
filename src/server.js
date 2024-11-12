@@ -55,6 +55,15 @@ app.use(express.static(path.join(__dirname, "../public")));
 app.use("/", indexRouter);
 app.use("/api", apiRouter);
 
+//Manejo de Errores.
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(err.status || 500).json({
+    error: true,
+    message: err.message || "Error interno del servidor"
+  });
+});
+
 // Exportación y manejo de errores
 export default async () => {
   try {

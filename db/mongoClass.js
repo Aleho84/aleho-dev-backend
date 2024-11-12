@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { UserError } from "../src/errors.js";
 
 class MongoClass {
   constructor(collectionName, docSchema) {
@@ -10,7 +11,7 @@ class MongoClass {
       const all = await this.collection.find();
       return all;
     } catch (error) {
-      throw error;
+      throw new UserError(error.message);
     }
   }
 
@@ -19,7 +20,7 @@ class MongoClass {
       const one = await this.collection.findById(id);
       return one;
     } catch (error) {
-      throw error;
+      throw new UserError(error.message);
     }
   }
 
@@ -28,7 +29,7 @@ class MongoClass {
       const newDoc = await this.collection.create(doc);
       return newDoc;
     } catch (error) {
-      throw error;
+      throw new UserError(error.message);
     }
   }
 
@@ -37,7 +38,7 @@ class MongoClass {
       const updatedDoc = await this.collection.findByIdAndUpdate(id, doc, { new: true });
       return updatedDoc;
     } catch (error) {
-      throw error;
+      throw new UserError(error.message);
     }
   }
 
@@ -46,7 +47,7 @@ class MongoClass {
       const deletedDoc = await this.collection.findByIdAndDelete(id);
       return deletedDoc;
     } catch (error) {
-      throw error;
+      throw new UserError(error.message);
     }
   }
 }

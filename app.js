@@ -1,7 +1,7 @@
 import startServer from "./src/server.js";
 import startMongo from "./src/mongo.js";
 
-// More descriptive function name for clarity
+// Inizializar la app
 const initializeApplication = async () => {
     try {
       await startMongo(); 

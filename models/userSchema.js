@@ -1,5 +1,10 @@
 import mongoose from "mongoose";
 
+export const randomNumber = function () {
+  const numero = Math.floor(Math.random() * 10000);
+  return numero.toString().padStart(4, '0');
+};
+
 export const usersSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -21,7 +26,7 @@ export const usersSchema = new mongoose.Schema({
   account: {
     type: {
       confirmed: { type: Boolean, default: false },
-      code: { type: String, default: "0000" },
+      code: { type: String, default: randomNumber() },
       admin: { type: Boolean, default: false },
     },
     default: {},

@@ -1,5 +1,6 @@
 import MongoClass from './mongoClass.js';
 import { usersSchema } from '../models/userSchema.js';
+import { UserError } from "../src/errors.js";
 
 export class MongoDBUsers extends MongoClass {
   constructor() {
@@ -11,7 +12,7 @@ export class MongoDBUsers extends MongoClass {
       const user = await this.collection.findOne({ email });
       return user;
     } catch (error) {
-      throw error;
+      throw new UserError(error.message);
     }
   }
 }

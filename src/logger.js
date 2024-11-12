@@ -14,6 +14,7 @@ function createLogger(env) {
     return logger;
 }
 
+// Inicializa el logger winston
 const logger = createLogger(process.env.NODE_ENV || "development");
 
 export default logger;
