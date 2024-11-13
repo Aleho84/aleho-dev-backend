@@ -7,6 +7,7 @@
   "scripts": {
     "dev": "nodemon --no-warnings .",
     "start": "node --no-warnings .",
+    "update": "ncu -u",
     "test": "node ./node_modules/mocha/bin/mocha.js ./test/test.js"
   },
   "author": {
@@ -25,25 +26,25 @@
   "dependencies": {
     "axios": "^1.7.7",
     "bcrypt": "^5.1.1",
-    "chai": "^5.1.1",
-    "cookie-parser": "^1.4.6",
+    "chai": "^5.1.2",
+    "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
-    "ejs": "^3.1.9",
-    "express": "^4.20.0",
+    "ejs": "^3.1.10",
+    "express": "^4.21.1",
     "jsonwebtoken": "^9.0.2",
-    "mocha": "^10.4.0",
-    "mongoose": "^8.4.0",
+    "mocha": "^10.8.2",
+    "mongoose": "^8.8.1",
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
     "passport-local": "^1.0.0",
     "swagger-jsdoc": "^6.2.8",
-    "swagger-ui-express": "^5.0.0",
-    "winston": "^3.14.2",
-    "winston-mongodb": "^5.1.1"
+    "swagger-ui-express": "^5.0.1",
+    "winston": "^3.17.0",
+    "winston-mongodb": "^6.0.0"
   },
   "devDependencies": {
-    "nodemon": "^3.1.0"
+    "nodemon": "^3.1.7"
   },
   "nodemonConfig": {
     "ignore": [

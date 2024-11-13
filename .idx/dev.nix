@@ -26,7 +26,7 @@
       enable = true;
       previews = {
         web = {
-          command = [ "npm" "run" "dev" "--trace-warnings" "--" "--port" "$PORT" ];
+          command = [ "npm" "run" "dev" "--trace-warnings" "--port" "$PORT" ];
           manager = "web";
         };
       };
