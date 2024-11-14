@@ -1,5 +1,6 @@
 import logger from "../src/logger.js";
 
+// Render index page
 export const getIndexPage = async (req, res) => {
   try {
     res.render("index", {
@@ -9,5 +10,15 @@ export const getIndexPage = async (req, res) => {
   } catch (error) {
     logger.error(error);
     res.status(500).render("error", { error });
+  }
+};
+
+// Prueba de acceso
+export const accessTest = async (req, res) => {
+  try {
+    const { user } = req;
+    res.status(200).json({ message: "Test de acceso exitoso!", user });
+  } catch (error) {
+    next(error);
   }
 };

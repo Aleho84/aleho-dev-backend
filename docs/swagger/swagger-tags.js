@@ -2,5 +2,5 @@
  * @swagger
  * tags:
  *   - name: Users
- *     description: User authentication. 
+ *     description: User authentication.  
  */

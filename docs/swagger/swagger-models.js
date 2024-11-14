@@ -53,4 +53,12 @@
  *         password:
  *           type: string
  *           example: FAtiga24 
+ * 
+ *     Delete:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: string
+ *           example: 67341b32e287f39bc1cef38e
+ * 
  */

@@ -16,6 +16,9 @@ passport.use(
     async (jwtPayload, done) => {
       try {
         const user = await usersDao.get(jwtPayload.id);
+
+        if (!user) return done(null, false); // Uy, este usuario no esta!
+
         const userResponse = {
           id: user._id,
           name: user.name,
@@ -25,13 +28,8 @@ passport.use(
           admin: user.account.admin,
         };
 
-        if (!user) return done(null, false);
-
-        if (user) {
-          return done(null, userResponse); // Encontramos al usuario, que alegria!
-        } else {
-          return done(null, false); // Uy, este usuario no esta!
-        }
+        return done(null, userResponse); // Encontramos al usuario, que alegria!
+        
       } catch (err) {
         return done(err, false); // Algo malio sal!
       }

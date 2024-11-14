@@ -50,6 +50,8 @@
  *           description: OK. Login successfully.
  *         "401":
  *           description: Unauthorized. Login failed.
+ *         "400":
+ *           description: Bad request. Login failed.
  *         "500":
  *           description: Internal Server Error.
  */
@@ -57,21 +59,31 @@
 /**
  * @swagger
  * paths:
- *   /api/v1/users/test/:
- *     get:
- *       summary: Test access.
- *       description: Test secure endpoint access.
- *       operationId: "test"
+ *   /api/v1/users/delete:
+ *     delete:
+ *       security:
+ *         - bearerAuth: [] 
+ *       summary: Delete user.
+ *       description: Delete a user by ID.
+ *       operationId: "delete"
  *       tags:
  *         - Users
+ *       parameters: []
+ *       requestBody:
+ *         required: true
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Delete'
  *       produces:
  *         - application/json
- *       parameters: []
  *       responses:
  *         "200":
- *           description: OK.
+ *           description: OK. User deleted successfully.
  *         "401":
- *           description: Unauthorized.
+ *           description: Unauthorized. deleted failed.
+ *         "400":
+ *           description: Bad request. deleted failed.
  *         "500":
  *           description: Internal Server Error.
  */

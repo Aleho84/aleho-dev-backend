@@ -111,12 +111,3 @@ export const usersDelete = async (req, res, next) => {
   }
 };
 
-// Prueba de acceso
-export const usersTest = async (req, res) => {
-  try {
-    const { user } = req;
-    res.status(200).json({ message: "Test de acceso exitoso!", user });
-  } catch (error) {
-    next(error);
-  }
-};
