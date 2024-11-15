@@ -12,23 +12,39 @@
  *     User:
  *       type: object
  *       properties:
+ *         _id:
+ *           type: string
+ *           example: 67340e283306a14a304b6c28
  *         name:
  *           type: string
  *           example: Pepe
- *         lastname:
- *           type: string
- *           example: Argento
  *         email:
  *           type: string
- *           example: pepeargento@mail.com
+ *           example: pepe@mail.com
  *         password:
  *           type: string
  *           example: fatiga
  *         image:
  *           type: string
  *           example: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSgWSWOqeAoLAfMlbBBg8IN-v2x5IGAfbuSg&usqp=CAU
+ *         account:
+ *           type: object
+ *           properties:
+ *             confirmed:
+ *               type: boolean
+ *               example: true
+ *             code:
+ *               type: string
+ *               example: 0953
+ *             admin:
+ *               type: boolean
+ *               example: false
+ *             _id:
+ *               type: string
+ *               example: 67340e283306a14a304b6c27
  * 
  *     Signin:
+ *       x-internal: true
  *       type: object
  *       properties:
  *         name:
