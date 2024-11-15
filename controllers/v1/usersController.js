@@ -103,10 +103,19 @@ export const usersDelete = async (req, res, next) => {
     // Busca y elimina el usuario
     const deleteUser = await usersDao.delete(id);
     if (!deleteUser) throw new ValidationError(`Usuario con id:'${id}' no encontrado`);
-    
-    res.status(200).json({message: "Usuario eliminado correctamente"});
+
+    res.status(200).json({ message: "Usuario eliminado correctamente" });
   } catch (error) {
     next(error);
   }
 };
 
+// Listar usuarios.
+export const usersList = async (req, res, next) => {
+  try {
+    const usersList = await usersDao.getAll();
+    res.status(200).json(usersList);
+  } catch (error) {
+    next(error);
+  }
+};

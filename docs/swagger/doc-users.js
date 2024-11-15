@@ -87,3 +87,27 @@
  *         "500":
  *           description: Internal Server Error.
  */
+
+/**
+ * @swagger
+ * paths:
+ *   /api/v1/users/list:
+ *     get:
+ *       security:
+ *         - bearerAuth: [] 
+ *       summary: Get users.
+ *       description: Get a list of all users.
+ *       operationId: "list"
+ *       tags:
+ *         - Users
+ *       parameters: []
+ *       produces:
+ *         - application/json
+ *       responses:
+ *         "200":
+ *           description: OK. Get users list successfully.
+ *         "401":
+ *           description: Unauthorized. deleted failed.
+ *         "500":
+ *           description: Internal Server Error.
+ */
