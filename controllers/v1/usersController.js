@@ -1,9 +1,8 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-import logger from "../../src/logger.js";
 import { ValidationError, UnauthorizedError } from "../../src/errors.js";
-import { encryptPassword, comparePassword } from '../../src/bcrypt.js';
+import { encryptPassword, comparePassword } from "../../src/bcrypt.js";
 import { usersDao } from "../../db/db.js";
 import jwt from "jsonwebtoken";
 
