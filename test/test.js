@@ -45,6 +45,21 @@ describe("Test endpoint", () => {
         }
     });
 
+    it("Get list of users", async () => {
+        try {
+            const response = await axios.get(`${urlEndpoint}/api/${version}/users/list`, {
+                headers: {
+                    "User-Agent": 'Aleho-Dev-Backend Test',
+                    "Authorization": `Bearer ${userToken}`
+                }
+            });
+
+            assert.equal(response.status, 200);
+        } catch (error) {
+            assert.fail(error.message);
+        }
+    });
+
     it("Delete new user", async () => {
         try {
             const deleteUser = { "id": userID };
