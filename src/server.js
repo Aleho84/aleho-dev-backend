@@ -11,7 +11,7 @@ import path from "path";
 import passport from "passport";
 import "../config/passport.js";
 import { fileURLToPath } from "url";
-import logger from "./logger.js";
+import logger from "../utils/logger.js";
 
 import apiRouter from "../routes/apiRoutes.js";
 import indexRouter from "../routes/indexRoutes.js";

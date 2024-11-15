@@ -1,4 +1,4 @@
-import logger from "../src/logger.js";
+import logger from "../utils/logger.js";
 
 // Render index page
 export const getIndexPage = async (req, res) => {

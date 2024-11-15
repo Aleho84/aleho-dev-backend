@@ -1,6 +1,6 @@
 import MongoClass from './mongoClass.js';
 import { usersSchema } from '../models/userSchema.js';
-import { UserError } from "../src/errors.js";
+import { UserError } from "../config/errors.js";
 
 export class MongoDBUsers extends MongoClass {
   constructor() {

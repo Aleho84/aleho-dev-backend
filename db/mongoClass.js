@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { UserError } from "../src/errors.js";
+import { UserError } from "../config/errors.js";
 
 class MongoClass {
   constructor(collectionName, docSchema) {

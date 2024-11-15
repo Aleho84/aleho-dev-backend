@@ -1,7 +1,7 @@
 import { Router } from "express";
 import passport from "passport";
 import { usersSignin, usersLogin, usersDelete, usersList } from "../../controllers/v1/usersController.js";
-import { debuggerMidd } from '../../src/debugger.js';
+import { debuggerMidd } from "../../utils/debugger.js";
 
 const userRouter = Router();
 const auth = passport.authenticate("jwt", { session: false });

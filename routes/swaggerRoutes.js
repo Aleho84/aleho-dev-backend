@@ -4,7 +4,7 @@ dotenv.config();
 import express from "express";
 import swaggerJsDoc from "swagger-jsdoc";
 import swaggerUI from "swagger-ui-express";
-import readJson  from '../src/readJson.js';
+import readJson  from "../utils/readJson.js";
 import path from "path";
 
 const { PROTOCOL, HOST, PORT } = process.env;

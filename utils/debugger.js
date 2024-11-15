@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-import logger from "../src/logger.js";
+import logger from "./logger.js";
 
 export const debuggerMidd = async (req, res, next) => {
     const debuggerData = {
