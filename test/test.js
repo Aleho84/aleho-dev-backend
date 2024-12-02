@@ -27,7 +27,6 @@ describe("Test endpoint", () => {
         }
     });
 
-
     it("Login new user", async () => {
         try {
             const loginUser = {

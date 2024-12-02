@@ -1,7 +1,7 @@
 import logger from "../utils/logger.js";
 
 // Render index page
-export const getIndexPage = async (req, res) => {
+export const getIndexPage = async (req, res, next) => {
   try {
     res.render("index", {
       title: "Aleho-Dev",
@@ -14,7 +14,7 @@ export const getIndexPage = async (req, res) => {
 };
 
 // Prueba de acceso
-export const accessTest = async (req, res) => {
+export const accessTest = async (req, res, next) => {
   try {
     const { user } = req;
     res.status(200).json({ message: "Test de acceso exitoso!", user });

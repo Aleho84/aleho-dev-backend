@@ -111,3 +111,27 @@
  *         "500":
  *           description: Internal Server Error.
  */
+
+/**
+ * @swagger
+ * paths:
+ *   /api/v1/chatbot/list:
+ *     get:
+ *       security:
+ *         - bearerAuth: [] 
+ *       summary: Get chatbot List.
+ *       description: Get a list of all users.
+ *       operationId: "list"
+ *       tags:
+ *         - Chatbots
+ *       parameters: []
+ *       produces:
+ *         - application/json
+ *       responses:
+ *         "200":
+ *           description: OK. Get chatbot list successfully.
+ *         "401":
+ *           description: Unauthorized. get chatbot list failed.
+ *         "500":
+ *           description: Internal Server Error.
+ */
