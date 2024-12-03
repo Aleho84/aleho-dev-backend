@@ -29,9 +29,9 @@ export const chatbotSchema = new mongoose.Schema({
             },
             topK: {
                 type: Number,
-                default: 0.40,
+                default: 40,
                 min: 0,
-                max: 1
+                max: 99
             },
             maxOutputTokens: {
                 type: Number,
