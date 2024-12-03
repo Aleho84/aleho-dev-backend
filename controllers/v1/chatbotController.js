@@ -21,15 +21,7 @@ export const chatbotList = async (req, res, next) => {
 
 export const chatbotNew = async (req, res, next) => {
     try {
-        const { chatbotName, model, systemInstruction, generationConfig, history } = req.body;
-
-        const newChatBot = await chatbotDao.create({
-            chatbotName,
-            model,
-            systemInstruction,
-            generationConfig,
-            history
-        });
+        const newChatBot = await chatbotDao.create(req.body);
 
         res.status(201).json({ id: newChatBot._id, });
     } catch (error) {

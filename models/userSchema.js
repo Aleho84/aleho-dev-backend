@@ -8,16 +8,26 @@ export const randomNumber = function () {
 export const usersSchema = new mongoose.Schema({
   name: {
     type: String,
-    default: ''
+    required: true,
+    trim: true
   },
   email: {
     type: String,
     required: true,
     unique: true,
+    trim: true,
+    lowercase: true,
+    validate: {
+      validator: function (v) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+      },
+      message: props => `${props.value} no es un email válido!`
+    }
   },
   password: {
     type: String,
-    required: true
+    required: true,
+    minlength: 8
   },
   image: {
     type: String,
@@ -28,7 +38,16 @@ export const usersSchema = new mongoose.Schema({
       confirmed: { type: Boolean, default: false },
       code: { type: String, default: randomNumber() },
       admin: { type: Boolean, default: false },
+      confirmationDate: { type: Date, defaul: null }
     },
-    default: {},
+    default: {}
   },
+  createdAt: {
+    type: Date,
+    default: Date.now
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now
+  }
 });

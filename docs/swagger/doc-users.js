@@ -3,69 +3,61 @@
  * paths:
  *   /api/v1/users/signin:
  *     post:
- *       summary: User signin.
- *       description: Register a user.
- *       operationId: "signin"
+ *       summary: Register a new user
+ *       description: Creates a new user account
+ *       operationId: signin
  *       tags:
  *         - Users
- *       parameters: []
  *       requestBody:
  *         required: true
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Signin'
- *       produces:
- *         - application/json
  *       responses:
- *         "201":
- *           description: Signin successfully.
- *         "400":
- *           description: Bad request. Signin failed.
- *         "500":
- *           description: Internal Server Error.
- */
-
-/**
- * @swagger
- * paths:
+ *         '201':
+ *           description: User created successfully
+ *         '400':
+ *           description: Bad request - Invalid input data or user already exists
+ *         '500':
+ *           description: Internal server error
  *   /api/v1/users/login:
  *     post:
- *       summary: User login.
- *       description: Authentication for an user.
- *       operationId: "login"
+ *       summary: Log in an existing user
+ *       description: Authenticates a user with email and password
+ *       operationId: login
  *       tags:
  *         - Users
- *       parameters: []
  *       requestBody:
  *         required: true
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Login'
- *       produces:
- *         - application/json
  *       responses:
- *         "200":
- *           description: OK. Login successfully.
- *         "401":
- *           description: Unauthorized. Login failed.
- *         "400":
- *           description: Bad request. Login failed.
- *         "500":
- *           description: Internal Server Error.
- */
-
-/**
- * @swagger
- * paths:
+ *         '200':
+ *           description: Login successful
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 type: object
+ *                 properties:
+ *                   token:
+ *                     type: string
+ *                     description: JWT authentication token
+ *         '401':
+ *           description: Unauthorized - Invalid credentials
+ *         '400':
+ *           description: Bad request - Missing email or password
+ *         '500':
+ *           description: Internal server error
  *   /api/v1/users/delete:
  *     delete:
  *       security:
- *         - bearerAuth: [] 
- *       summary: Delete user.
- *       description: Delete a user by ID.
- *       operationId: "delete"
+ *         - bearerAuth: []
+ *       summary: Delete a user
+ *       description: Deletes a user by ID
+ *       operationId: delete
  *       tags:
  *         - Users
  *       parameters: []
@@ -75,63 +67,81 @@
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Delete'
- *       produces:
- *         - application/json
  *       responses:
- *         "200":
- *           description: OK. User deleted successfully.
- *         "401":
- *           description: Unauthorized. deleted failed.
- *         "400":
- *           description: Bad request. deleted failed.
- *         "500":
- *           description: Internal Server Error.
- */
-
-/**
- * @swagger
- * paths:
+ *         '204':
+ *           description: User deleted successfully
+ *         '401':
+ *           description: Unauthorized - Missing or invalid token
+ *         '404':
+ *           description: User not found
+ *         '500':
+ *           description: Internal server error
  *   /api/v1/users/list:
  *     get:
  *       security:
- *         - bearerAuth: [] 
- *       summary: Get users.
- *       description: Get a list of all users.
- *       operationId: "list"
+ *         - bearerAuth: []
+ *       summary: Get all users
+ *       description: Retrieves a list of all users
+ *       operationId: listUsers
  *       tags:
  *         - Users
- *       parameters: []
- *       produces:
- *         - application/json
  *       responses:
- *         "200":
- *           description: OK. Get users list successfully.
- *         "401":
- *           description: Unauthorized. deleted failed.
- *         "500":
- *           description: Internal Server Error.
- */
-
-/**
- * @swagger
- * paths:
+ *         '200':
+ *           description: List of users retrieved successfully
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 type: array
+ *                 items:
+ *                   $ref: '#/components/schemas/User'
+ *         '401':
+ *           description: Unauthorized - Missing or invalid token
+ *         '500':
+ *           description: Internal server error
  *   /api/v1/chatbot/list:
  *     get:
  *       security:
- *         - bearerAuth: [] 
- *       summary: Get chatbot List.
- *       description: Get a list of all users.
- *       operationId: "list"
+ *         - bearerAuth: []
+ *       summary: Get all chatbots
+ *       description: Retrieves a list of all chatbots
+ *       operationId: listChatbots
  *       tags:
- *         - Chatbots
- *       parameters: []
- *       produces:
- *         - application/json
+ *         - Chatbot
  *       responses:
- *         "200":
- *           description: OK. Get chatbot list successfully.
- *         "401":
- *           description: Unauthorized. get chatbot list failed.
- *         "500":
- *           description: Internal Server Error.
+ *         '200':
+ *           description: List of chatbots retrieved successfully
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 type: array
+ *                 items:
+ *                   $ref: '#/components/schemas/Chatbot'
+ *         '401':
+ *           description: Unauthorized - Missing or invalid token
+ *         '500':
+ *           description: Internal server error
+ *   /api/v1/chatbot/new:
+ *     post:
+ *       security:
+ *         - bearerAuth: []
+ *       summary: Create a new chatbot
+ *       description: Creates a new chatbot instance
+ *       operationId: createChatbot 
+ *       tags:
+ *         - Chatbot
+ *       requestBody:
+ *         required: true
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Chatbot'
+ *       responses:
+ *         '201':
+ *           description: Chatbot created successfully
+ *         '401':
+ *           description: Unauthorized - Missing or invalid token
+ *         '400':
+ *           description: Bad request - Invalid input data 
+ *         '500':
+ *           description: Internal server error
  */

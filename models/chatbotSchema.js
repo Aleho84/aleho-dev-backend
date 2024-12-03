@@ -1,17 +1,32 @@
 import mongoose from "mongoose";
 
 export const chatbotSchema = new mongoose.Schema({
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'usersSchema'
+    },
     chatbotName: {
         type: String,
         required: true
     },
+    description: {
+        type: String,
+        default: 'Eres un chatbot'
+    },
     model: {
         type: String,
-        required: true
+        required: true,
+        validate: {
+            validator: function (v) {
+                return ['gemini-1.5-pro', 'gemini-1.5-flash', 'gemini-1.5-flash-8b'].includes(v);
+            },
+            message: props => `${props.value} no es un modelo válido!`
+        }
     },
     systemInstruction: {
         type: String,
-        default: ''
+        default: 'Eres un chatbot'
     },
     generationConfig: {
         type: {
@@ -46,7 +61,20 @@ export const chatbotSchema = new mongoose.Schema({
         },
     },
     history: {
-        type: Array,
+        type: [{
+            role: String,
+            parts: [{
+                text: String
+            }],
+        }],
         default: [],
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
+    },
+    updatedAt: {
+        type: Date,
+        default: Date.now
     },
 });

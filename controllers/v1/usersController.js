@@ -104,7 +104,7 @@ export const usersDelete = async (req, res, next) => {
     const deleteUser = await usersDao.delete(id);
     if (!deleteUser) throw new ValidationError(`Usuario con id:'${id}' no encontrado`);
 
-    res.status(200).json({ message: "Usuario eliminado correctamente" });
+    res.status(204).json({ message: "Usuario eliminado correctamente" });
   } catch (error) {
     next(error);
   }
