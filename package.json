@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "nodemon --no-warnings .",
     "start": "node --no-warnings .",
-    "update": "ncu -u",
+    "update": "ncu -u && npm install",
     "test": "node ./node_modules/mocha/bin/mocha.js ./test/test.js"
   },
   "author": {
@@ -25,17 +25,18 @@
   "license": "ISC",
   "dependencies": {
     "@google/generative-ai": "^0.21.0",
-    "axios": "^1.7.7",
+    "axios": "^1.7.9",
     "bcrypt": "^5.1.1",
     "chai": "^5.1.2",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
-    "dotenv": "^16.4.5",
+    "dotenv": "^16.4.7",
     "ejs": "^3.1.10",
-    "express": "^4.21.1",
+    "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
-    "mocha": "^10.8.2",
-    "mongoose": "^8.8.1",
+    "mocha": "^11.0.1",
+    "mongoose": "^8.9.0",
+    "nodemailer": "^6.9.16",
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
     "passport-local": "^1.0.0",
@@ -45,7 +46,7 @@
     "winston-mongodb": "^6.0.0"
   },
   "devDependencies": {
-    "nodemon": "^3.1.7"
+    "nodemon": "^3.1.9"
   },
   "nodemonConfig": {
     "ignore": [
