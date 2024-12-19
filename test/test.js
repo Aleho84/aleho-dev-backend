@@ -9,6 +9,19 @@ const version = "v1";
 let userToken = "";
 let userID = "";
 
+const getHeaders = (token) => ({
+    "User-Agent": 'Aleho-Dev-Backend Test',
+    "Authorization": `Bearer ${token}`
+});
+
+const handleError = (error) => {
+    if (error.response) {
+        assert.fail(`Request failed with status ${error.response.status}: ${error.response.data}`);
+    } else {
+        assert.fail(error.message);
+    }
+};
+
 describe("Test Users", () => {
     it("Create new user", async () => {
         try {
@@ -23,7 +36,7 @@ describe("Test Users", () => {
             assert.equal(response.status, 201);
             assert.property(response.data, "token");
         } catch (error) {
-            assert.fail(error.message);
+            handleError(error);
         }
     });
 
@@ -40,22 +53,19 @@ describe("Test Users", () => {
             assert.equal(response.status, 200);
             assert.property(response.data, "token");
         } catch (error) {
-            assert.fail(error.message);
+            handleError(error);
         }
     });
 
     it("Get list of users", async () => {
         try {
             const response = await axios.get(`${urlEndpoint}/api/${version}/users/list`, {
-                headers: {
-                    "User-Agent": 'Aleho-Dev-Backend Test',
-                    "Authorization": `Bearer ${userToken}`
-                }
+                headers: getHeaders(userToken)
             });
 
             assert.equal(response.status, 200);
         } catch (error) {
-            assert.fail(error.message);
+            handleError(error);
         }
     });
 
@@ -63,16 +73,13 @@ describe("Test Users", () => {
         try {
             const deleteUser = { "id": userID };
             const response = await axios.delete(`${urlEndpoint}/api/${version}/users/delete`, {
-                headers: {
-                    "User-Agent": 'Aleho-Dev-Backend Test',
-                    "Authorization": `Bearer ${userToken}`
-                },
+                headers: getHeaders(userToken),
                 data: deleteUser
             });
 
             assert.equal(response.status, 204);
         } catch (error) {
-            assert.fail(error.message);
+            handleError(error);
         }
     });
 });
