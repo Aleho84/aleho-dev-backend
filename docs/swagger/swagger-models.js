@@ -92,6 +92,13 @@
  *           type: string
  *           description: User ID to delete
  *           example: 67341b32e287f39bc1cef38e
+ *     CodeRequest:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: string
+ *           description: User ID to send an activation code
+ *           example: 67341b32e287f39bc1cef38e
  *     Chatbot:
  *       type: object
  *       properties:

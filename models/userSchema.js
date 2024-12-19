@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { dateCodeExpire, generateCode } from "../utils/mailer.js";
 
 export const randomNumber = function () {
   const numero = Math.floor(Math.random() * 10000);
@@ -36,7 +37,8 @@ export const usersSchema = new mongoose.Schema({
   account: {
     type: {
       confirmed: { type: Boolean, default: false },
-      code: { type: String, default: randomNumber() },
+      code: { type: String, default: generateCode(5) },
+      dateCodeExpire: { type: Date, default: dateCodeExpire(24) },
       admin: { type: Boolean, default: false },
       confirmationDate: { type: Date, defaul: null }
     },

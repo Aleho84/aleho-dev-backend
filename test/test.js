@@ -9,7 +9,7 @@ const version = "v1";
 let userToken = "";
 let userID = "";
 
-describe("Test endpoint", () => {
+describe("Test Users", () => {
     it("Create new user", async () => {
         try {
             const newUser = {
@@ -70,8 +70,7 @@ describe("Test endpoint", () => {
                 data: deleteUser
             });
 
-            assert.equal(response.status, 200);
-            assert.property(response.data, "message");
+            assert.equal(response.status, 204);
         } catch (error) {
             assert.fail(error.message);
         }

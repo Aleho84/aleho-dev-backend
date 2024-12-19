@@ -3,12 +3,13 @@ dotenv.config();
 
 import { ValidationError, UnauthorizedError } from "../../config/errors.js";
 import { encryptPassword, comparePassword } from "../../utils/bcrypt.js";
+import { sendCodeValidatorMail } from "../../utils/mailer.js";
 import { usersDao } from "../../db/db.js";
 import jwt from "jsonwebtoken";
 
 const jwtExpire = process.env.JWT_EXPIRE || "1w";
 const jwtSecret = process.env.JWT_SECRET || "no_olvide_el_jwt_secret";
-
+const defaultIMG = process.env.PROTOCOL + "://" + process.env.HOST + ":" + process.env.PORT + "/img/aleho-dev.png";
 
 // Registrar usuario
 export const usersSignin = async (req, res, next) => {
@@ -115,6 +116,34 @@ export const usersList = async (req, res, next) => {
   try {
     const usersList = await usersDao.getAll();
     res.status(200).json(usersList);
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Enviar codigo de confirmacion usuario.
+export const usersActivationCodeRequest = async (req, res, next) => {
+  try {
+    const { id, appName, imageURL } = req.body;
+
+    if (!id) throw new ValidationError("Parametro faltante: 'id'");
+
+    const userToSendCode = await usersDao.get(id);
+    if (!userToSendCode) throw new ValidationError(`Usuario con id:'${id}' no encontrado`);
+
+    const { email, name, account } = userToSendCode;
+
+    // Regenerar el código de activación
+    const newActivationCode = generateActivationCode();
+    account.code = newActivationCode;
+
+    // Guardar el nuevo código en la base de datos
+    await usersDao.update(id, { account });
+
+    const codeSend = await sendCodeValidatorMail(email, name, appName || "ALEHO-DEV", imageURL || defaultIMG, newActivationCode);
+    if (codeSend.error) throw new Error(codeSend.error);
+
+    res.status(200).json({ code: newActivationCode });
   } catch (error) {
     next(error);
   }

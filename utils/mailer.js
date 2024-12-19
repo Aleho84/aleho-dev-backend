@@ -1,12 +1,12 @@
-import nodemailer from 'nodemailer';
-import logger from './logger.js';
+import nodemailer from "nodemailer";
+import logger from "./logger.js";
 import dotenv from "dotenv";
 dotenv.config();
 
 const { EMAIL_HOST, EMAIL_PORT, EMAIL_SECURE, EMAIL_USER, EMAIL_PASS } = process.env;
 
 export const generateCode = (digitCount) => {
-    let code = '';
+    let code = "";
 
     const generateDigit = () => {
         let digit = Math.floor(Math.random() * 10);
@@ -15,7 +15,7 @@ export const generateCode = (digitCount) => {
 
     for (let index = 0; index < digitCount; index++) {
         code = code + generateDigit();
-    }
+    };
 
     return code;
 };
@@ -59,7 +59,7 @@ export const sendMail = async (to, subject, text, html) => {
 
 export const sendCodeValidatorMail = async (to, userName, appNAme, imageURL, code) => {
     try {
-        const subject = 'ALEHO-BOT. Verificacion de registro';
+        const subject = `${appNAme}. Verificacion de registro`;
         const text = `Hola ${userName}, has solicitado registrarte a nuestra app ${appNAme}. Si esto es así, por favor, utilizá el siguiente código de verificación\nCodigo de verificacion = ${code}`;
         await sendMail(to, subject, text, generateValidatorMailBody(userName, appNAme, imageURL, code));
         return true;

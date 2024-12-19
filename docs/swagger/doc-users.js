@@ -144,4 +144,36 @@
  *           description: Bad request - Invalid input data 
  *         '500':
  *           description: Internal server error
+ *   /api/v1/users/activationCodeRequest:
+ *     post:
+ *       security:
+ *         - bearerAuth: []
+ *       summary: Activation code request
+ *       description: Send an activation code to the user's email
+ *       operationId: activationCodeRequest
+ *       tags:
+ *         - Users
+ *       requestBody:
+ *         required: true
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/CodeRequest'
+ *       responses:
+ *         '200':
+ *           description: Send an activation code successful
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 type: object
+ *                 properties:
+ *                   code:
+ *                     type: number
+ *                     description: Code send to user
+ *         '401':
+ *           description: Unauthorized - Invalid credentials
+ *         '400':
+ *           description: Bad request - Missing id
+ *         '500':
+ *           description: Internal server error
  */
