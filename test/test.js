@@ -27,7 +27,7 @@ describe("Test Users", () => {
         try {
             const newUser = {
                 "name": "test",
-                "email": "alejandro.r.abraham@gmail.com",
+                "email": "alehodev@gmail.com",
                 "password": "Asdf1234",
                 "image": `${urlEndpoint}/img/user.png`
             };
@@ -43,7 +43,7 @@ describe("Test Users", () => {
     it("Login new user", async () => {
         try {
             const loginUser = {
-                "email": "alejandro.r.abraham@gmail.com",
+                "email": "alehodev@gmail.com",
                 "password": "Asdf1234"
             };
             const response = await axios.post(`${urlEndpoint}/api/${version}/users/login`, loginUser);
