@@ -3,13 +3,14 @@ dotenv.config();
 
 import { ValidationError, UnauthorizedError } from "../../config/errors.js";
 import { encryptPassword, comparePassword } from "../../utils/bcrypt.js";
-import { sendCodeValidatorMail } from "../../utils/mailer.js";
+import { sendCodeValidatorMail, generateCode } from "../../utils/mailer.js";
 import { usersDao } from "../../db/db.js";
 import jwt from "jsonwebtoken";
 
 const jwtExpire = process.env.JWT_EXPIRE || "1w";
 const jwtSecret = process.env.JWT_SECRET || "no_olvide_el_jwt_secret";
-const defaultIMG = process.env.PROTOCOL + "://" + process.env.HOST + ":" + process.env.PORT + "/img/aleho-dev.png";
+const apiURL = process.env.PROTOCOL + "://" + process.env.HOST + ":" + process.env.PORT;
+const defaultIMG = apiURL + "/img/aleho-dev.png";
 
 // Registrar usuario
 export const usersSignin = async (req, res, next) => {
@@ -39,6 +40,18 @@ export const usersSignin = async (req, res, next) => {
 
     // Generar y enviar el token JWT si el alta es correcta
     const token = jwt.sign({ id: newUser._id }, jwtSecret, { expiresIn: jwtExpire });
+
+    // Enviar correo de confirmacion
+    fetch(apiURL + '/api/v1/users/activationCodeRequest', {
+      method: 'POST',
+      headers: {
+        "User-Agent": 'Aleho-Dev-Backend',
+        'Content-Type': 'application/json',
+        "Authorization": `Bearer ${token}`
+      },
+      body: JSON.stringify({ id: newUser._id }),
+    });
+
     res.status(201).json({
       token,
       user: {
@@ -134,14 +147,14 @@ export const usersActivationCodeRequest = async (req, res, next) => {
     const { email, name, account } = userToSendCode;
 
     // Regenerar el código de activación
-    const newActivationCode = generateActivationCode();
+    const newActivationCode = generateCode();
     account.code = newActivationCode;
 
     // Guardar el nuevo código en la base de datos
     await usersDao.update(id, { account });
 
     const codeSend = await sendCodeValidatorMail(email, name, appName || "ALEHO-DEV", imageURL || defaultIMG, newActivationCode);
-    if (codeSend.error) throw new Error(codeSend.error);
+    if (!codeSend) throw new Error('Error al enviar el codigo de activacion');
 
     res.status(200).json({ code: newActivationCode });
   } catch (error) {

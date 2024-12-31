@@ -6,6 +6,7 @@ dotenv.config();
 const { EMAIL_HOST, EMAIL_PORT, EMAIL_SECURE, EMAIL_USER, EMAIL_PASS } = process.env;
 
 export const generateCode = (digitCount) => {
+    digitCount = digitCount || 6;
     let code = "";
 
     const generateDigit = () => {
@@ -34,10 +35,13 @@ export const sendMail = async (to, subject, text, html) => {
         let transporter = nodemailer.createTransport({
             host: EMAIL_HOST,
             port: EMAIL_PORT,
-            secure: EMAIL_SECURE,
+            secusecureConnection: EMAIL_SECURE,
             auth: {
                 user: EMAIL_USER,
                 pass: EMAIL_PASS,
+            },
+            tls: {
+                ciphers: 'SSLv3'
             }
         });
 
@@ -61,11 +65,10 @@ export const sendCodeValidatorMail = async (to, userName, appNAme, imageURL, cod
     try {
         const subject = `${appNAme}. Verificacion de registro`;
         const text = `Hola ${userName}, has solicitado registrarte a nuestra app ${appNAme}. Si esto es así, por favor, utilizá el siguiente código de verificación\nCodigo de verificacion = ${code}`;
-        await sendMail(to, subject, text, generateValidatorMailBody(userName, appNAme, imageURL, code));
-        return true;
+        return await sendMail(to, subject, text, generateValidatorMailBody(userName, appNAme, imageURL, code));
     } catch (error) {
         logger.error(`[NODEMAILER]: ❌ ${error}`);
-        return error;
+        return false;
     }
 };
 
