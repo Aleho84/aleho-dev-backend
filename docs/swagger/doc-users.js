@@ -106,7 +106,7 @@
  *       description: Retrieves a list of all chatbots
  *       operationId: listChatbots
  *       tags:
- *         - Chatbot
+ *         - Chatbots
  *       responses:
  *         '200':
  *           description: List of chatbots retrieved successfully
@@ -128,7 +128,7 @@
  *       description: Creates a new chatbot instance
  *       operationId: createChatbot 
  *       tags:
- *         - Chatbot
+ *         - Chatbots
  *       requestBody:
  *         required: true
  *         content:
