@@ -16,18 +16,18 @@ const getSystemInfo = () => {
     return {
         totalMemory: {
             B: totalMemory,
-            KB: (totalMemory / 1024).toFixed(1),
-            MB: (totalMemory / 1024 / 1024).toFixed(1),
-            GB: (totalMemory / 1024 / 1024 /1024).toFixed(1),
+            KB: totalMemory / 1024,
+            MB: totalMemory / 1024 / 1024,
+            GB: totalMemory / 1024 / 1024 /1024,
         },
         freeMemory: {
             B: freeMemory,
-            KB: (freeMemory / 1024).toFixed(1),
-            MB: (freeMemory / 1024 / 1024).toFixed(1),
-            GB: (freeMemory / 1024 / 1024 /1024).toFixed(1),
+            KB: freeMemory / 1024,
+            MB: freeMemory / 1024 / 1024,
+            GB: freeMemory / 1024 / 1024 /1024,
         },
         uptime: {
-            totalSeconds: (uptime).toFixed(0),
+            totalSeconds: uptime,
             dias,
             horas,
             minutos,
