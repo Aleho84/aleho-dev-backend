@@ -80,18 +80,18 @@ const isIPOnline = async (ip, port) => {
 
         socket.on('connect', () => {
             socket.destroy();
-            resolve({ status: 1, message: 'Online' });
+            resolve({ status: 1, message: 'online' });
         });
 
         socket.on('error', (error) => {
             socket.destroy();
             console.log('error en soket', error);
-            resolve({ status: 2, message: 'Warning', error: error.message });
+            resolve({ status: 2, message: 'warning', error: error.message });
         });
 
         socket.setTimeout(5000, () => {
             socket.destroy();
-            resolve({ status: 0, message: 'Offline' });;
+            resolve({ status: 0, message: 'offline' });;
         });
 
         socket.connect(port, ip);
