@@ -86,7 +86,7 @@ const isIPOnline = async (ip, port) => {
         socket.on('error', (error) => {
             socket.destroy();
             console.log('error en soket', error);
-            resolve({ status: 2, message: 'warning', error: error.message });
+            resolve({ status: 2, message: 'offline', error: error.message });
         });
 
         socket.setTimeout(5000, () => {
