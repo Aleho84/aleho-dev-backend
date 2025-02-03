@@ -1,4 +1,5 @@
 import os from 'node:os';
+import net from 'net';
 import { exec } from 'child_process';
 
 const getSystemInfo = () => {
@@ -73,6 +74,31 @@ const getSystemProcess = async () => {
     }
 };
 
+const isIPOnline = async (ip, port) => {
+    return new Promise((resolve) => {
+        const socket = new net.Socket();
+
+        socket.on('connect', () => {
+            socket.destroy();
+            resolve({ status: 1, message: 'Online' });
+        });
+
+        socket.on('error', (error) => {
+            socket.destroy();
+            console.log('error en soket', error);
+            resolve({ status: 2, message: 'Warning', error: error.message });
+        });
+
+        socket.setTimeout(5000, () => {
+            socket.destroy();
+            resolve({ status: 0, message: 'Offline' });;
+        });
+
+        socket.connect(port, ip);
+    });
+}
+
+// Exports
 export const systemInfo = async (req, res, next) => {
     try {
         res.status(200).json(getSystemInfo());
@@ -84,6 +110,15 @@ export const systemInfo = async (req, res, next) => {
 export const systemProcess = async (req, res, next) => {
     try {
         res.status(200).json(await getSystemProcess());
+    } catch (error) {
+        next(error);
+    }
+};
+
+export const isOnline = async (req, res, next) => {
+    try {
+        const { ip, port } = req.body;
+        res.status(200).json(await isIPOnline(ip, port));
     } catch (error) {
         next(error);
     }
