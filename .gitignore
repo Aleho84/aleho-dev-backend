@@ -10,3 +10,6 @@ node_modules/
 # Certificates
 *.pem
 *.csr
+
+# Custom
+run-doker.bat
