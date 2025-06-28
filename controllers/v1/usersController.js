@@ -17,16 +17,6 @@ export const usersSignin = async (req, res, next) => {
   try {
     const { name, email, password, image } = req.body;
 
-    // Comprueba los parametros    
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const passwordRegex = /^(?=.*[A-Z])(?=.*[0-9]).{8,}$/;
-
-    if (!name) throw new ValidationError("Parametro faltante: 'name'");
-    if (!email) throw new ValidationError("Parametro faltante: 'email'");
-    if (!emailRegex.test(email)) throw new ValidationError(`Parametro invalido: '${email}' no es una direccion de correo valida`);
-    if (!password) throw new ValidationError("Parametro faltante:'password'");
-    if (!passwordRegex.test(password)) throw new ValidationError("Parametro invalido: La contraseña debe tener al menos 8 caracteres, una mayuscula y un numero");
-
     // Encripta la contraseña
     const hashedPassword = await encryptPassword(password);
 
@@ -72,12 +62,6 @@ export const usersSignin = async (req, res, next) => {
 export const usersLogin = async (req, res, next) => {
   try {
     const { email, password } = req.body;
-
-    // Comprueba los parametros 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!email) throw new ValidationError("Parametro faltante: 'email'");
-    if (!emailRegex.test(email)) throw new ValidationError(`Parametro invalido: '${email}' no es una direccion de correo valida`);
-    if (!password) throw new ValidationError("Parametro faltante:'password'");
 
     // Busca al usuario por correo electronico
     const user = await usersDao.findByEmail(email);

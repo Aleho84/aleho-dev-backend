@@ -1,4 +1,4 @@
-import logger from "../config/logger.js";
+import logger from "../utils/logger.js";
 
 const errorHandler = (err, req, res, next) => {
   // Loguear el error
