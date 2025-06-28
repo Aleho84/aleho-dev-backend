@@ -42,14 +42,6 @@ export const usersSchema = new mongoose.Schema({
       admin: { type: Boolean, default: false },
       confirmationDate: { type: Date, defaul: null }
     },
-    default: {}
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now
-  },
-  updatedAt: {
-    type: Date,
-    default: Date.now
+    default: () => ({})
   }
-});
+}, { timestamps: true });
