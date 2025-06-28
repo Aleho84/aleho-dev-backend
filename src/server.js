@@ -15,6 +15,7 @@ import logger from "../utils/logger.js";
 
 import apiRouter from "../routes/apiRoutes.js";
 import indexRouter from "../routes/indexRoutes.js";
+import errorHandler from "../middlewares/errorHandler.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -55,14 +56,9 @@ app.use(express.static(path.join(__dirname, "../public")));
 app.use("/", indexRouter);
 app.use("/api", apiRouter);
 
-//Manejo de Errores.
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(err.status || 500).json({
-    error: true,
-    message: err.message || "Error interno del servidor"
-  });
-});
+
+// Manejo de Errores
+app.use(errorHandler);
 
 // Exportación y manejo de errores
 export default async () => {
