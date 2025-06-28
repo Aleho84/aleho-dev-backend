@@ -1,18 +1,9 @@
-import { chatbotDao } from "../../db/db.js";
-import {
-    GoogleGenerativeAI,
-    HarmCategory,
-    HarmBlockThreshold,
-} from '@google/generative-ai';
 
-import dotenv from "dotenv";
-dotenv.config();
-
-const { GEMINI_API_KEY } = process.env;
+import * as chatbotService from "../../services/chatbotService.js";
 
 export const chatbotList = async (req, res, next) => {
     try {
-        const list = await chatbotDao.getAll();
+        const list = await chatbotService.list();
         res.status(200).json(list);
     } catch (error) {
         next(error);
@@ -21,8 +12,7 @@ export const chatbotList = async (req, res, next) => {
 
 export const chatbotNew = async (req, res, next) => {
     try {
-        const newChatBot = await chatbotDao.create(req.body);
-
+        const newChatBot = await chatbotService.create(req.body);
         res.status(201).json({ id: newChatBot._id, });
     } catch (error) {
         next(error);
