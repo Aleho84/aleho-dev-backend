@@ -6,6 +6,6 @@ const indexRouter = Router();
 const auth = passport.authenticate("jwt", { session: false });
 
 indexRouter.get("/", getIndexPage);
-indexRouter.get("/accessTest", auth, accessTest);
+indexRouter.get("/accessTest", accessTest);
 
 export default indexRouter;

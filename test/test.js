@@ -23,7 +23,7 @@ const handleError = (error) => {
 };
 
 describe("Test Users", () => {
-    it("Create new user", async () => {
+    it("Create user test", async () => {
         try {
             const newUser = {
                 "name": "test",
@@ -40,7 +40,7 @@ describe("Test Users", () => {
         }
     });
 
-    it("Login new user", async () => {
+    it("Login user test", async () => {
         try {
             const loginUser = {
                 "email": "alehodev@gmail.com",
@@ -81,8 +81,57 @@ describe("Test Users", () => {
             handleError(error);
         }
     });
+});
 
-    it("Delete new user", async () => {
+describe("Test Server", () => {
+    it("Get systemInfo", async () => {
+        try {
+            const response = await axios.get(`${urlEndpoint}/api/${version}/server/systemInfo`, {
+                headers: getHeaders(userToken)
+            });
+            assert.equal(response.status, 200);
+            assert.property(response.data, "totalMemory");
+            assert.property(response.data, "freeMemory");
+            assert.property(response.data, "uptime");
+            assert.property(response.data, "cpu");
+        } catch (error) {
+            handleError(error);
+        }
+    });
+
+    it("Get systemProcess", async () => {
+        try {
+            const response = await axios.get(`${urlEndpoint}/api/${version}/server/systemProcess`, {
+                headers: getHeaders(userToken)
+            });
+            assert.equal(response.status, 200);
+            assert.property(response.data, "process_1");
+        } catch (error) {
+            handleError(error);
+        }
+    });
+
+    it("Get isOnline", async () => {
+        try {
+            const parms = {
+                "ip": "127.0.0.1",
+                "port": "80",
+            };
+            const response = await axios.post(`${urlEndpoint}/api/${version}/server/isOnline`, parms, {
+                headers: getHeaders(userToken)
+            });
+
+            assert.equal(response.status, 200);
+            assert.property(response.data, "status");
+            assert.property(response.data, "message");
+        } catch (error) {
+            handleError(error);
+        }
+    });
+});
+
+describe("Finish Test", () => {
+    it("Delete user test", async () => {
         try {
             const deleteUser = { "id": userID };
             const response = await axios.delete(`${urlEndpoint}/api/${version}/users/delete`, {
