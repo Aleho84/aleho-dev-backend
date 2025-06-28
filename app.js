@@ -1,3 +1,6 @@
+import { validateEnvVariables } from "./config/envValidator.js";
+validateEnvVariables();
+
 import startServer from "./src/server.js";
 import startMongo from "./src/mongo.js";
 
