@@ -1,15 +1,17 @@
 import { Router } from "express";
 import passport from "passport";
 import { usersSignin, usersLogin, usersDelete, usersList, usersActivationCodeRequest } from "../../controllers/v1/usersController.js";
-import { debuggerMidd } from "../../utils/debugger.js";
+import { debuggerMidd } from "../../middlewares/debugger.js";
 
 const userRouter = Router();
 const auth = passport.authenticate("jwt", { session: false });
 
-userRouter.post("/signin", debuggerMidd, usersSignin);
-userRouter.post("/login", debuggerMidd, usersLogin);
-userRouter.delete("/delete", debuggerMidd, auth, usersDelete);
-userRouter.get("/list", debuggerMidd, auth, usersList);
-userRouter.post("/activationCodeRequest", debuggerMidd, auth, usersActivationCodeRequest);
+userRouter.use(debuggerMidd);
+
+userRouter.post("/signin", usersSignin);
+userRouter.post("/login", usersLogin);
+userRouter.delete("/delete", auth, usersDelete);
+userRouter.get("/list", auth, usersList);
+userRouter.post("/activationCodeRequest", auth, usersActivationCodeRequest);
 
 export default userRouter;
