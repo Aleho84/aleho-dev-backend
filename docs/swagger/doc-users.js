@@ -4,7 +4,7 @@
  *   /api/v1/users/signin:
  *     post:
  *       summary: Register a new user
- *       description: Creates a new user account
+ *       description: Creates a new user account and returns a JWT token.
  *       operationId: signin
  *       tags:
  *         - Users
@@ -13,18 +13,30 @@
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Signin'
+ *               $ref: '#/components/schemas/SigninRequest'
  *       responses:
  *         '201':
- *           description: User created successfully
+ *           description: User created successfully.
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 $ref: '#/components/schemas/AuthSuccessResponse'
  *         '400':
- *           description: Bad request - Invalid input data or user already exists
+ *           description: Bad request - Invalid input data or user already exists.
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 $ref: '#/components/schemas/AuthFailResponse'
  *         '500':
- *           description: Internal server error
+ *           description: Internal server error.
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 $ref: '#/components/schemas/ErrorResponse'
  *   /api/v1/users/login:
  *     post:
  *       summary: Log in an existing user
- *       description: Authenticates a user with email and password
+ *       description: Authenticates a user and returns a JWT token.
  *       operationId: login
  *       tags:
  *         - Users
@@ -33,61 +45,82 @@
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Login'
+ *               $ref: '#/components/schemas/LoginRequest'
  *       responses:
  *         '200':
- *           description: Login successful
+ *           description: Login successful.
  *           content:
  *             application/json:
  *               schema:
- *                 type: object
- *                 properties:
- *                   token:
- *                     type: string
- *                     description: JWT authentication token
+ *                 $ref: '#/components/schemas/AuthSuccessResponse'
  *         '401':
- *           description: Unauthorized - Invalid credentials
+ *           description: Unauthorized - Invalid credentials.
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 $ref: '#/components/schemas/LoginRequestUnautorized'
  *         '400':
- *           description: Bad request - Missing email or password
+ *           description: Bad request - Missing email or password.
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 $ref: '#/components/schemas/LoginRequestBadRequest'
  *         '500':
- *           description: Internal server error
- *   /api/v1/users/delete:
+ *           description: Internal server error.
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 $ref: '#/components/schemas/ErrorResponse'
+ *   /api/v1/users/{userId}:
  *     delete:
  *       security:
  *         - bearerAuth: []
- *       summary: Delete a user
- *       description: Deletes a user by ID
- *       operationId: delete
+ *       summary: Delete a user by ID
+ *       description: Deletes a specific user using their unique ID.
+ *       operationId: deleteUserById
  *       tags:
  *         - Users
- *       parameters: []
- *       requestBody:
- *         required: true
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Delete'
+ *       parameters:
+ *         - in: path
+ *           name: userId
+ *           required: true
+ *           schema:
+ *             type: string
+ *           description: The unique ID of the user to delete.
  *       responses:
  *         '204':
- *           description: User deleted successfully
+ *           description: User deleted successfully.
  *         '401':
- *           description: Unauthorized - Missing or invalid token
+ *           description: Unauthorized - Missing or invalid token.
+ *           content:
+ *             text/plain:
+ *               schema:
+ *                 type: string
+ *                 example: "Unauthorized"
  *         '404':
- *           description: User not found
+ *           description: User not found.
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 $ref: '#/components/schemas/DeleteUserNotFound'
  *         '500':
- *           description: Internal server error
+ *           description: Internal server error.
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 $ref: '#/components/schemas/ErrorResponse'
  *   /api/v1/users/list:
  *     get:
  *       security:
  *         - bearerAuth: []
  *       summary: Get all users
- *       description: Retrieves a list of all users
+ *       description: Retrieves a list of all users.
  *       operationId: listUsers
  *       tags:
  *         - Users
  *       responses:
  *         '200':
- *           description: List of users retrieved successfully
+ *           description: List of users retrieved successfully.
  *           content:
  *             application/json:
  *               schema:
@@ -95,21 +128,30 @@
  *                 items:
  *                   $ref: '#/components/schemas/User'
  *         '401':
- *           description: Unauthorized - Missing or invalid token
+ *           description: Unauthorized - Missing or invalid token.
+ *           content:
+ *             text/plain:
+ *               schema:
+ *                 type: string
+ *                 example: "Unauthorized"
  *         '500':
- *           description: Internal server error
+ *           description: Internal server error.
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 $ref: '#/components/schemas/ErrorResponse'
  *   /api/v1/chatbot/list:
  *     get:
  *       security:
  *         - bearerAuth: []
  *       summary: Get all chatbots
- *       description: Retrieves a list of all chatbots
+ *       description: Retrieves a list of all chatbots.
  *       operationId: listChatbots
  *       tags:
  *         - Chatbots
  *       responses:
  *         '200':
- *           description: List of chatbots retrieved successfully
+ *           description: List of chatbots retrieved successfully.
  *           content:
  *             application/json:
  *               schema:
@@ -117,15 +159,24 @@
  *                 items:
  *                   $ref: '#/components/schemas/Chatbot'
  *         '401':
- *           description: Unauthorized - Missing or invalid token
+ *           description: Unauthorized - Missing or invalid token.
+ *           content:
+ *             text/plain:
+ *               schema:
+ *                 type: string
+ *                 example: "Unauthorized"
  *         '500':
- *           description: Internal server error
+ *           description: Internal server error.
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 $ref: '#/components/schemas/ErrorResponse'
  *   /api/v1/chatbot/new:
  *     post:
  *       security:
  *         - bearerAuth: []
  *       summary: Create a new chatbot
- *       description: Creates a new chatbot instance
+ *       description: Creates a new chatbot instance.
  *       operationId: createChatbot 
  *       tags:
  *         - Chatbots
@@ -137,31 +188,49 @@
  *               $ref: '#/components/schemas/Chatbot'
  *       responses:
  *         '201':
- *           description: Chatbot created successfully
+ *           description: Chatbot created successfully. Returns the newly created chatbot object.
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 $ref: '#/components/schemas/Chatbot'
  *         '401':
- *           description: Unauthorized - Missing or invalid token
+ *           description: Unauthorized - Missing or invalid token.
+ *           content:
+ *             text/plain:
+ *               schema:
+ *                 type: string
+ *                 example: "Unauthorized"
  *         '400':
- *           description: Bad request - Invalid input data 
+ *           description: Bad request - Invalid input data.
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 $ref: '#/components/schemas/ChatBotBadRequest'
  *         '500':
- *           description: Internal server error
- *   /api/v1/users/activationCodeRequest:
+ *           description: Internal server error.
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 $ref: '#/components/schemas/ErrorResponse'
+ *   /api/v1/users/{userId}/activation-code:
  *     post:
  *       security:
  *         - bearerAuth: []
- *       summary: Activation code request
- *       description: Send an activation code to the user's email
- *       operationId: activationCodeRequest
+ *       summary: Request a new activation code
+ *       description: Generates and sends a new activation code to the user's email.
+ *       operationId: requestActivationCode
  *       tags:
  *         - Users
- *       requestBody:
- *         required: true
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/CodeRequest'
+ *       parameters:
+ *         - in: path
+ *           name: userId
+ *           required: true
+ *           schema:
+ *             type: string
+ *           description: The unique ID of the user requesting the code.
  *       responses:
  *         '200':
- *           description: Send an activation code successful
+ *           description: Activation code sent successfully.
  *           content:
  *             application/json:
  *               schema:
@@ -169,11 +238,25 @@
  *                 properties:
  *                   code:
  *                     type: number
- *                     description: Code send to user
+ *                     description: The activation code sent to the user.
+ *                     example: 123456
  *         '401':
- *           description: Unauthorized - Invalid credentials
+ *           description: Unauthorized - Missing or invalid token.
+ *           content:
+ *             text/plain:
+ *               schema:
+ *                 type: string
+ *                 example: "Unauthorized"
  *         '400':
- *           description: Bad request - Missing id
+ *           description: Bad request - Missing or invalid user ID.
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 $ref: '#/components/schemas/ActivationCodeUserNotFound'
  *         '500':
- *           description: Internal server error
+ *           description: Internal server error.
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 $ref: '#/components/schemas/ErrorResponse'
  */

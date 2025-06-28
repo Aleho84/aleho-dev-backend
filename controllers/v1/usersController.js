@@ -93,14 +93,14 @@ export const usersLogin = async (req, res, next) => {
 // Remover usuario.
 export const usersDelete = async (req, res, next) => {
   try {
-    const { id } = req.body;
+    const { userId } = req.params;
 
     // Comprueba los parametros 
-    if (!id) throw new ValidationError("Parametro faltante: 'id'");
+    if (!userId) throw new ValidationError("Parametro faltante: 'userId'");
 
     // Busca y elimina el usuario
-    const deleteUser = await usersDao.delete(id);
-    if (!deleteUser) throw new ValidationError(`Usuario con id:'${id}' no encontrado`);
+    const deleteUser = await usersDao.delete(userId);
+    if (!deleteUser) throw new ValidationError(`Usuario con id:'${userId}' no encontrado`);
 
     res.status(204).json({ message: "Usuario eliminado correctamente" });
   } catch (error) {
@@ -121,12 +121,13 @@ export const usersList = async (req, res, next) => {
 // Enviar codigo de confirmacion usuario.
 export const usersActivationCodeRequest = async (req, res, next) => {
   try {
-    const { id, appName, imageURL } = req.body;
+    const { userId } = req.params;
+    const { appName, imageURL } = req.body;
 
-    if (!id) throw new ValidationError("Parametro faltante: 'id'");
+    if (!userId) throw new ValidationError("Parametro faltante: 'userId'");
 
-    const userToSendCode = await usersDao.get(id);
-    if (!userToSendCode) throw new ValidationError(`Usuario con id:'${id}' no encontrado`);
+    const userToSendCode = await usersDao.get(userId);
+    if (!userToSendCode) throw new ValidationError(`Usuario con id:'${userId}' no encontrado`);
 
     const { email, name, account } = userToSendCode;
 
@@ -135,7 +136,7 @@ export const usersActivationCodeRequest = async (req, res, next) => {
     account.code = newActivationCode;
 
     // Guardar el nuevo código en la base de datos
-    await usersDao.update(id, { account });
+    await usersDao.update(userId, { account });
 
     const codeSend = await sendCodeValidatorMail(email, name, appName || "ALEHO-DEV", imageURL || defaultIMG, newActivationCode);
     if (!codeSend) throw new Error('Error al enviar el codigo de activacion');

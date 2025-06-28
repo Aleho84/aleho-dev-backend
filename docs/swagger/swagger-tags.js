@@ -2,7 +2,9 @@
  * @swagger
  * tags:
  *   - name: Users
- *     description: User authentication.  
+ *     description: Endpoints for user management, registration, and authentication.
  *   - name: Chatbots
- *     description: Chatbod management. 
+ *     description: Endpoints for managing and interacting with Chatbot instances.
+ *   - name: Server
+ *     description: Endpoints to retrieve server status and hardware information.
  */

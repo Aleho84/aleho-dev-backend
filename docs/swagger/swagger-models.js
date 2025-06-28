@@ -14,7 +14,7 @@
  *           type: string
  *           description: User ID
  *           example: 67340e283306a14a304b6c28
- *           readOnly: true // Indicate that this field is read-only
+ *           readOnly: true
  *         name:
  *           type: string
  *           description: User's name
@@ -23,16 +23,16 @@
  *           type: string
  *           description: User's email address
  *           example: pepe@mail.com
- *           format: email // Use the email format for validation
+ *           format: email
  *         password:
  *           type: string
  *           description: User's password
  *           example: fatiga
- *           writeOnly: true // Hide this field in responses for security
+ *           writeOnly: true
  *         image:
  *           type: string
  *           description: URL of the user's profile image
- *           example: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSgWSWOqeAoLAfMlbBBg8IN-v2x5IGAfbuSg&usqp=CAU
+ *           example: https://example.com/user.png
  *         account:
  *           type: object
  *           description: User account information
@@ -53,8 +53,12 @@
  *               type: string
  *               format: date-time
  *               description: Date and time when the account was confirmed
- *     Signin:
+ *     SigninRequest:
  *       type: object
+ *       required:
+ *         - name
+ *         - email
+ *         - password
  *       properties:
  *         name:
  *           type: string
@@ -72,9 +76,12 @@
  *         image:
  *           type: string
  *           description: URL of the user's profile image
- *           example: https://e7.pngegg.com/pngimages/946/395/png-clipart-guillermo-francella-put-on-francella-pepe-argento-actor-humour-actor-celebrities-face.png
- *     Login:
+ *           example: https://example.com/user.png
+ *     LoginRequest:
  *       type: object
+ *       required:
+ *         - email
+ *         - password
  *       properties:
  *         email:
  *           type: string
@@ -84,38 +91,130 @@
  *         password:
  *           type: string
  *           description: User's password
- *           example: FAtiga24 
- *     Delete:
+ *           example: FAtiga24
+ *     LoginRequestBadRequest:
  *       type: object
  *       properties:
- *         id:
+ *         error:
  *           type: string
- *           description: User ID to delete
- *           example: 67341b32e287f39bc1cef38e
- *     CodeRequest:
+ *           description: A short error code or type.
+ *           example: "ValidationError"
+ *         message:
+ *           type: string
+ *           description: A human-readable error message.
+ *           example: "Error de validación: El campo 'password' es obligatorio."
+ *     LoginRequestUnautorized:
  *       type: object
  *       properties:
- *         id:
+ *         error:
  *           type: string
- *           description: User ID to send an activation code
- *           example: 67341b32e287f39bc1cef38e
+ *           description: A short error code or type.
+ *           example: "UnauthorizedError"
+ *         message:
+ *           type: string
+ *           description: A human-readable error message.
+ *           example: "Credenciales invalidas: contraseña incorrecta."
+ *     AuthSuccessResponse:
+ *       type: object
+ *       properties:
+ *         token:
+ *           type: string
+ *           description: JWT authentication token
+ *           example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NWY4ZjcwNWJkYjdhZTMyZTBkYWY3NSIsImlhdCI6MTc1MTA5MzEwNCwiZXhwIjoxNzUxNjk3OTA0fQ.TzTi8oHipANbNAU_xZs2D49PqPIe_meaoYXPtDnlxo8
+ *         user:
+ *           type: object
+ *           properties:
+ *             id:
+ *               type: string
+ *               example: "67340e283306a14a304b6c28"
+ *             name:
+ *               type: string
+ *               example: "Pepe"
+ *             email:
+ *               type: string
+ *               example: "pepeargento@mail.com"
+ *             image:
+ *               type: string
+ *               example: "https://example.com/user.png"
+ *             confirmed:
+ *               type: boolean
+ *               example: false
+ *             admin:
+ *               type: boolean
+ *               example: false
+ *     AuthFailResponse:
+ *       type: object
+ *       properties:
+ *         error:
+ *           type: string
+ *           description: A short error code or type.
+ *           example: "ValidationError"
+ *         message:
+ *           type: string
+ *           description: A human-readable error message.
+ *           example: "Error de validación: El campo 'email' es obligatorio."
+ *     DeleteUserNotFound:
+ *       type: object
+ *       properties:
+ *         error:
+ *           type: string
+ *           description: A short error code or type.
+ *           example: "ValidationError"
+ *         message:
+ *           type: string
+ *           description: A human-readable error message.
+ *           example: "Usuario con id:'685f990dbaf1ba2874d3f889' no encontrado."
+ *     ActivationCodeUserNotFound:
+ *       type: object
+ *       properties:
+ *         error:
+ *           type: string
+ *           description: A short error code or type.
+ *           example: "UserError"
+ *         message:
+ *           type: string
+ *           description: A human-readable error message.
+ *           example: "Cast to ObjectId failed for value \"679720eff84b514f137c132\" (type string) at path \"_id\" for model \"users\""
+ *     ChatBotBadRequest:
+ *       type: object
+ *       properties:
+ *         error:
+ *           type: string
+ *           description: A short error code or type.
+ *           example: "UserError"
+ *         message:
+ *           type: string
+ *           description: A human-readable error message.
+ *           example: "chatbot validation failed: chatbotName: Path `chatbotName` is required."
+ *     ErrorResponse:
+ *       type: object
+ *       properties:
+ *         error:
+ *           type: string
+ *           description: A short error code or type.
+ *           example: "InternalServerError"
+ *         message:
+ *           type: string
+ *           description: A human-readable error message.
+ *           example: "An unexpected error has occurred on the server."
  *     Chatbot:
  *       type: object
+ *       required:
+ *         - chatbotName
+ *         - model
  *       properties:
  *         userId:
- *           type: String
+ *           type: string
  *           description: ID of the user who owns this chatbot
  *           example: 67341b32e287f39bc1cef38e
  *         chatbotName:
  *           type: string
  *           description: Name of the chatbot
  *           example: My Helpful Chatbot
- *           required: true
  *         model:
  *           type: string
  *           description: The AI model used by the chatbot
  *           example: gemini-1.5-flash
- *           required: true
  *         systemInstruction:
  *           type: string
  *           description: System-level instructions for the chatbot's behavior
@@ -182,4 +281,82 @@
  *                 type: string
  *                 format: date-time
  *                 description: Timestamp of the message
+ *     SystemInfo:
+ *       type: object
+ *       properties:
+ *         totalMemory:
+ *           type: object
+ *           properties:
+ *             B:
+ *               type: number
+ *             KB:
+ *               type: number
+ *             MB:
+ *               type: number
+ *             GB:
+ *               type: number
+ *         freeMemory:
+ *           type: object
+ *           properties:
+ *             B:
+ *               type: number
+ *             KB:
+ *               type: number
+ *             MB:
+ *               type: number
+ *             GB:
+ *               type: number
+ *         uptime:
+ *           type: object
+ *           properties:
+ *             totalSeconds:
+ *               type: number
+ *             dias:
+ *               type: integer
+ *             horas:
+ *               type: integer
+ *             minutos:
+ *               type: integer
+ *             segundos:
+ *               type: integer
+ *         cpu:
+ *           type: object
+ *           properties:
+ *             model:
+ *               type: string
+ *             cores:
+ *               type: integer
+ *             speed:
+ *               type: integer
+ *             times:
+ *               type: object
+ *     IsOnlineRequest:
+ *       type: object
+ *       required:
+ *         - ip
+ *         - port
+ *       properties:
+ *         ip:
+ *           type: string
+ *           description: The IP address to check.
+ *           example: "8.8.8.8"
+ *         port:
+ *           type: integer
+ *           description: The port to check.
+ *           example: 53
+ *     IsOnlineResponse:
+ *       type: object
+ *       properties:
+ *         status:
+ *           type: integer
+ *           description: "Connection status: 1 (online), 2 (error), 0 (offline/timeout)."
+ *           example: 1
+ *         message:
+ *           type: string
+ *           description: "A descriptive message of the status."
+ *           example: "online"
+ *         error:
+ *           type: string
+ *           description: "An error message if the status is 2."
+ *           example: "connect ECONNREFUSED 127.0.0.1:81"
  */

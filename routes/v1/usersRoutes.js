@@ -12,8 +12,8 @@ userRouter.use(debuggerMidd);
 
 userRouter.post("/signin", validate(userSigninSchema), usersSignin);
 userRouter.post("/login", validate(userLoginSchema), usersLogin);
-userRouter.delete("/delete", auth, usersDelete);
+userRouter.delete("/:userId", auth, usersDelete);
 userRouter.get("/list", auth, usersList);
-userRouter.post("/activationCodeRequest", auth, usersActivationCodeRequest);
+userRouter.post("/:userId/activation-code", auth, usersActivationCodeRequest);
 
 export default userRouter;
