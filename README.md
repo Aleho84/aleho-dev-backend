@@ -4,18 +4,23 @@
 
 ## 📑 Tabla de Contenidos
 
-- [🧐 Sobre el Proyecto](#-sobre-el-proyecto)
-- [🚀 Empezando](#-empezando)
-  - [Prerrequisitos](#prerrequisitos)
-  - [Instalación](#instalación)
-- [🛠️ Uso](#️-uso)
-  - [Scripts Disponibles](#scripts-disponibles)
-- [✨ Características](#-características)
-- [📂 Estructura del Proyecto](#-estructura-del-proyecto)
-- [💻 Tecnologías Utilizadas](#-tecnologías-utilizadas)
-- [📖 Endpoints de la API](#-endpoints-de-la-api)
-- [🤝 Contribuciones](#-contribuciones)
-- [📞 Contacto](#-contacto)
+- [aleho-dev-backend](#aleho-dev-backend)
+  - [📑 Tabla de Contenidos](#-tabla-de-contenidos)
+  - [🧐 Sobre el Proyecto](#-sobre-el-proyecto)
+  - [🚀 Empezando](#-empezando)
+    - [Prerequisites](#prerequisites)
+    - [Instalación](#instalación)
+  - [🛠️ Uso](#️-uso)
+    - [Scripts Disponibles](#scripts-disponibles)
+  - [✨ Características](#-características)
+  - [📂 Estructura del Proyecto](#-estructura-del-proyecto)
+  - [💻 Tecnologías Utilizadas](#-tecnologías-utilizadas)
+  - [📖 Endpoints de la API](#-endpoints-de-la-api)
+    - [Usuarios](#usuarios)
+    - [Chatbot](#chatbot)
+    - [Server](#server)
+  - [🤝 Contribuciones](#-contribuciones)
+  - [📞 Contacto](#-contacto)
 
 ## 🧐 Sobre el Proyecto
 
@@ -142,10 +147,20 @@ La API está documentada con Swagger y se puede explorar interactivamente en `ht
 
 ### Chatbot
 
-| Método | Ruta                 | Descripción                     |
-| :----- | :------------------- | :------------------------------ |
-| GET    | /api/v1/chatbot/list | Obtener una lista de todos los chatbots. |
-| POST   | /api/v1/chatbot/new  | Crear un nuevo chatbot.         |
+| Método | Ruta                       | Descripción                     |
+| :----- | :------------------------- | :------------------------------ |
+| GET    | /api/v1/chatbot/list       | Obtener una lista de todos los chatbots. |
+| POST   | /api/v1/chatbot/new        | Crear un nuevo chatbot.         |
+| PUT    | /api/v1/chatbot/:chatBotId | Modificar un chatbot por ID.    |
+| DELETE | /api/v1/chatbot/:chatBotId | Eliminar un chatbot por ID.     |
+
+### Server
+| Método | Ruta                         | Descripción                     |
+| :----- | :--------------------------- | :------------------------------ |
+| GET    | /api/v1/server/SystemInfo    | Obtener información del sistema.|
+| GET    | /api/v1/server/systemProcess | Obtener información sobre los procesos del sistema.|
+| PUT    | /api/v1/server/isOnline      | Verificar si una puerto de una determinada IP esta activo.|
+
 
 ## 🤝 Contribuciones
 
