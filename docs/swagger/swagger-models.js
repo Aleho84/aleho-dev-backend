@@ -359,4 +359,15 @@
  *           type: string
  *           description: "An error message if the status is 2."
  *           example: "connect ECONNREFUSED 127.0.0.1:81"
+ *     UpdateUserNotFound:
+ *       type: object
+ *       properties:
+ *         error:
+ *           type: string
+ *           description: A short error code or type.
+ *           example: "ValidationError"
+ *         message:
+ *           type: string
+ *           description: A human-readable error message.
+ *           example: "Usuario con id:'68606b9aac624f4aeadaf7ef' no encontrado"
  */

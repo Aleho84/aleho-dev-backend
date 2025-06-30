@@ -100,3 +100,12 @@ export const activationCodeRequest = async (userId, body) => {
 
   return { code: newActivationCode };
 };
+
+export const updateUser = async (userId, userData) => {
+  if (!userId) throw new ValidationError("Parametro faltante: 'userId'");
+
+  const updatedUser = await usersDao.update(userId, userData);
+  if (!updatedUser) throw new ValidationError(`Usuario con id:'${userId}' no encontrado`);
+
+  return updatedUser;
+};

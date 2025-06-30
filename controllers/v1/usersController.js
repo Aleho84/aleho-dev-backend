@@ -47,3 +47,13 @@ export const usersActivationCodeRequest = async (req, res, next) => {
     next(error);
   }
 };
+
+export const usersUpdate = async (req, res, next) => {
+  try {
+    const { userId } = req.params;
+    const result = await userService.updateUser(userId, req.body);
+    res.status(200).json(result);
+  } catch (error) {
+    next(error);
+  }
+};

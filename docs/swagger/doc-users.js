@@ -109,6 +109,53 @@
  *             application/json:
  *               schema:
  *                 $ref: '#/components/schemas/ErrorResponse'
+ *     put:
+ *       security:
+ *         - bearerAuth: []
+ *       summary: Update a user by ID
+ *       description: Updates a specific user using their unique ID.
+ *       operationId: updateUserById
+ *       tags:
+ *         - Users
+ *       parameters:
+ *         - in: path
+ *           name: userId
+ *           required: true
+ *           schema:
+ *             type: string
+ *           description: The unique ID of the user to update.
+ *       requestBody:
+ *         required: true
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       responses:
+ *         '200':
+ *           description: User updated successfully.
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 $ref: '#/components/schemas/User'
+ *         '401':
+ *           description: Unauthorized - Missing or invalid token.
+ *           content:
+ *             text/plain:
+ *               schema:
+ *                 type: string
+ *                 example: "Unauthorized"
+ *         '404':
+ *           description: User not found.
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 $ref: '#/components/schemas/UpdateUserNotFound'
+ *         '500':
+ *           description: Internal server error.
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 $ref: '#/components/schemas/ErrorResponse'
  *   /api/v1/users/list:
  *     get:
  *       security:

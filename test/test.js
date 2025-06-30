@@ -57,6 +57,29 @@ describe("Test Users", () => {
         }
     });
 
+    it("Modify user test", async () => {
+        try {
+            const UserModify = {
+                "account": {
+                    "confirmed": true,
+                    "admin": true
+                }
+            };
+            const response = await axios.put(`${urlEndpoint}/api/${version}/users/${userID}`, UserModify, {
+                headers: getHeaders(userToken)
+            });
+
+            assert.equal(response.status, 200);
+            assert.property(response.data, "name");
+            assert.property(response.data, "email");
+            assert.property(response.data, "password");
+            assert.property(response.data, "image");
+            assert.property(response.data, "account");
+        } catch (error) {
+            handleError(error);
+        }
+    });
+
     it("Get list of users", async () => {
         try {
             const response = await axios.get(`${urlEndpoint}/api/${version}/users/list`, {
@@ -71,12 +94,12 @@ describe("Test Users", () => {
 
     it("Resend validation code", async () => {
         try {
-            const idUser = { "id": userID };
-            const response = await axios.post(`${urlEndpoint}/api/${version}/users/activationCodeRequest`, idUser, {
+            const response = await axios.post(`${urlEndpoint}/api/${version}/users/${userID}/activation-code`, {}, {
                 headers: getHeaders(userToken)
             });
 
             assert.equal(response.status, 200);
+            assert.property(response.data, "code");
         } catch (error) {
             handleError(error);
         }
@@ -133,10 +156,8 @@ describe("Test Server", () => {
 describe("Finish Test", () => {
     it("Delete user test", async () => {
         try {
-            const deleteUser = { "id": userID };
-            const response = await axios.delete(`${urlEndpoint}/api/${version}/users/delete`, {
-                headers: getHeaders(userToken),
-                data: deleteUser
+            const response = await axios.delete(`${urlEndpoint}/api/${version}/users/${userID}`, {
+                headers: getHeaders(userToken)
             });
 
             assert.equal(response.status, 204);
