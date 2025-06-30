@@ -306,4 +306,89 @@
  *             application/json:
  *               schema:
  *                 $ref: '#/components/schemas/ErrorResponse'
+ *   /api/v1/chatbot/{chatbotId}:
+ *     delete:
+ *       security:
+ *         - bearerAuth: []
+ *       summary: Delete a chatbot by ID
+ *       description: Deletes a specific chatbot using its unique ID.
+ *       operationId: deleteChatbotById
+ *       tags:
+ *         - Chatbots
+ *       parameters:
+ *         - in: path
+ *           name: chatbotId
+ *           required: true
+ *           schema:
+ *             type: string
+ *           description: The unique ID of the chatbot to delete.
+ *       responses:
+ *         '204':
+ *           description: Chatbot deleted successfully.
+ *         '401':
+ *           description: Unauthorized - Missing or invalid token.
+ *           content:
+ *             text/plain:
+ *               schema:
+ *                 type: string
+ *                 example: "Unauthorized"
+ *         '404':
+ *           description: Chatbot not found.
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 $ref: '#/components/schemas/DeleteChatbotNotFound'
+ *         '500':
+ *           description: Internal server error.
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 $ref: '#/components/schemas/ErrorResponse'
+ *     put:
+ *       security:
+ *         - bearerAuth: []
+ *       summary: Update a chatbot by ID
+ *       description: Updates a specific chatbot using its unique ID.
+ *       operationId: updateChatbotById
+ *       tags:
+ *         - Chatbots
+ *       parameters:
+ *         - in: path
+ *           name: chatbotId
+ *           required: true
+ *           schema:
+ *             type: string
+ *           description: The unique ID of the chatbot to update.
+ *       requestBody:
+ *         required: true
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Chatbot'
+ *       responses:
+ *         '200':
+ *           description: Chatbot updated successfully.
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 $ref: '#/components/schemas/Chatbot'
+ *         '401':
+ *           description: Unauthorized - Missing or invalid token.
+ *           content:
+ *             text/plain:
+ *               schema:
+ *                 type: string
+ *                 example: "Unauthorized"
+ *         '404':
+ *           description: Chatbot not found.
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 $ref: '#/components/schemas/UpdateChatbotNotFound'
+ *         '500':
+ *           description: Internal server error.
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 $ref: '#/components/schemas/ErrorResponse'
  */

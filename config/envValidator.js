@@ -16,6 +16,4 @@ export const validateEnvVariables = () => {
       )}. Por favor, defínalas en el archivo .env antes de iniciar la aplicación.`
     );
   }
-
-  console.log("Variables de entorno validadas correctamente.");
 };

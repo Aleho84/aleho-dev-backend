@@ -18,3 +18,21 @@ export const list = async () => {
 export const create = async (data) => {
     return await chatbotDao.create(data);
 };
+
+export const deleteChatbot = async (chatbotId) => {
+    if (!chatbotId) throw new ValidationError("Parametro faltante: 'chatbotId'");
+
+    const deletedChatbot = await chatbotDao.delete(chatbotId);
+    if (!deletedChatbot) throw new ValidationError(`Chatbot con id:'${chatbotId}' no encontrado`);
+
+    return { message: "Chatbot eliminado correctamente" };
+};
+
+export const updateChatbot = async (chatbotId, chatbotData) => {        
+    if (!chatbotId) throw new ValidationError("Parametro faltante: 'chatbotId'");
+
+    const updatedChatbot = await chatbotDao.update(chatbotId, chatbotData);
+    if (!updatedChatbot) throw new ValidationError(`Chatbot con id:'${chatbotId}' no encontrado`);
+
+    return updatedChatbot;
+};

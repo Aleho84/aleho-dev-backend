@@ -18,3 +18,23 @@ export const chatbotNew = async (req, res, next) => {
         next(error);
     }
 };
+
+export const chatbotDelete = async (req, res, next) => {
+    try {
+        const { chatbotId } = req.params;
+        const result = await chatbotService.deleteChatbot(chatbotId);
+        res.status(204).json(result);
+    } catch (error) {
+        next(error);
+    }
+};
+
+export const chatbotUpdate = async (req, res, next) => {
+    try {
+        const { chatbotId } = req.params;
+        const result = await chatbotService.updateChatbot(chatbotId, req.body);
+        res.status(200).json(result);
+    } catch (error) {
+        next(error);
+    }
+};

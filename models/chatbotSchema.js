@@ -19,7 +19,7 @@ export const chatbotSchema = new mongoose.Schema({
         required: true,
         validate: {
             validator: function (v) {
-                return ['gemini-1.5-pro', 'gemini-1.5-flash', 'gemini-1.5-flash-8b'].includes(v);
+                return ['gemini-2.5-pro', 'gemini-2.5-flash'].includes(v);
             },
             message: props => `${props.value} no es un modelo válido!`
         }
