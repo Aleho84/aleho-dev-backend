@@ -3,7 +3,7 @@ import passport from "passport";
 import { usersSignin, usersLogin, usersDelete, usersList, usersActivationCodeRequest } from "../../controllers/v1/usersController.js";
 import { debuggerMidd } from "../../middlewares/debugger.js";
 import validate from "../../middlewares/validator.js";
-import { userSigninSchema, userLoginSchema } from "../../utils/userSchemas.js";
+import { userSigninSchema, userLoginSchema } from "../../utils/Joi.js";
 
 const userRouter = Router();
 const auth = passport.authenticate("jwt", { session: false });
