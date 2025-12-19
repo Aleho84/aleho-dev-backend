@@ -7,4 +7,6 @@
  *     description: Endpoints for managing and interacting with Chatbot instances.
  *   - name: Server
  *     description: Endpoints to retrieve server status and hardware information.
+ *   - name: Devices
+ *     description: Endpoints for managing network devices.
  */

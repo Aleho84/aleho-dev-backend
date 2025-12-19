@@ -370,4 +370,78 @@
  *           type: string
  *           description: A human-readable error message.
  *           example: "Usuario con id:'68606b9aac624f4aeadaf7ef' no encontrado"
- */
+ *     Device:
+ *       type: object
+ *       properties:
+ *         _id:
+ *           type: string
+ *           description: Unique identifier for the device
+ *           example: "67341b32e287f39bc1cef38e"
+ *           readOnly: true
+ *         name:
+ *           type: string
+ *           description: Name of the device
+ *           example: "Main Database Server"
+ *         service:
+ *           type: string
+ *           description: Service running on the device
+ *           example: "PostgreSQL"
+ *         icon:
+ *           type: string
+ *           description: Icon identifier for the device (Lucide icon name)
+ *           example: "Database"
+ *         ip:
+ *           type: string
+ *           description: IP address of the device
+ *           example: "192.168.1.100"
+ *         port:
+ *           type: number
+ *           description: Port number the service is listening on
+ *           example: 5432
+ *         createdAt:
+ *           type: string
+ *           format: date-time
+ *           readOnly: true
+ *         updatedAt:
+ *           type: string
+ *           format: date-time
+ *           readOnly: true
+ *     DeviceInput:
+ *       type: object
+ *       required:
+ *         - name
+ *         - service
+ *         - icon
+ *         - ip
+ *         - port
+ *       properties:
+ *         name:
+ *           type: string
+ *           description: Name of the device
+ *           example: "Main Database Server"
+ *         service:
+ *           type: string
+ *           description: Service running on the device
+ *           example: "PostgreSQL"
+ *         icon:
+ *           type: string
+ *           description: Icon identifier for the device (Lucide icon name)
+ *           example: "Database"
+ *         ip:
+ *           type: string
+ *           description: IP address of the device
+ *           example: "192.168.1.100" 
+ *         port:
+ *           type: number
+ *           description: Port number the service is listening on
+ *           example: 5432
+ *     DeviceNotFound:
+ *       type: object
+ *       properties:
+ *         error:
+ *           type: string
+ *           example: "NotFoundError"
+ *         message:
+ *           type: string
+ *           example: "Device not found"
+ * */

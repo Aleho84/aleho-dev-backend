@@ -4,6 +4,7 @@ dotenv.config();
 
 let usersDao;
 let chatbotDao;
+let devicesDao;
 
 async function initUsersDao() {
   try {
@@ -25,10 +26,21 @@ async function initChatbotDao() {
   }
 }
 
+async function initDevicesDao() {
+  try {
+    const { MongoDBDevices } = await import('./mongoDBDevices.js');
+    devicesDao = new MongoDBDevices();
+  } catch (error) {
+    logger.error('Error al inicializar devicesDao:', error);
+    process.exit(1);
+  }
+}
+
 switch (process.env.DB_MODE) {
   case 'mongoDB':
     await initUsersDao();
     await initChatbotDao();
+    await initDevicesDao();
     break;
 
   default:
@@ -36,4 +48,4 @@ switch (process.env.DB_MODE) {
     process.exit(1);
 }
 
-export { usersDao, chatbotDao };
+export { usersDao, chatbotDao, devicesDao };
